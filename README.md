@@ -25,7 +25,7 @@ from dgp.datasets import SynchronizedSceneDataset
 # Load synchronized pairs of camera and lidar frames.
 dataset =
 SynchronizedSceneDataset('<path_to_dataset>/ddad.json',
-    datum_names=('lidar', 'camera_01', 'camera_05'),
+    datum_names=('lidar', 'CAMERA_01', 'CAMERA_05'),
     generate_depth_from_datum='lidar',
     split='train'
     )
@@ -44,7 +44,7 @@ The [DGP](https://github.com/TRI-ML/dgp) codebase provides a number of functions
 
 ## Dataset details
 
-DDAD includes high-resolution, long-range [Luminar-H2](https://www.luminartech.com/technology) as the LiDAR sensors used to generate pointclouds, with a maximum range of 250m and sub-1cm range precision. Additionally, it contains six calibrated cameras time-synchronized at 10 Hz, that together produce a 360 degree coverage around the vehicle. The six cameras are 2.4MP (1936 x 1216), global-shutter, and oriented at 60 degree intervals. They are synchronized with 10 Hz scans from our Luminar-H2 sensors oriented at 90 degree intervals (datum names: `camera_01`, `camera_05`, `camera_06`, `camera_07`, `camera_08` and `camera_09`) - the camera intrinsics can be accessed with `datum['intrinsics']`. The data from the Luminar sensors is aggregated into a 360 point cloud covering the scene (datum name: `lidar`). Each sensor has associated extrinsics mapping it to a common vehicle frame of reference (`datum['extrinsics']`).
+DDAD includes high-resolution, long-range [Luminar-H2](https://www.luminartech.com/technology) as the LiDAR sensors used to generate pointclouds, with a maximum range of 250m and sub-1cm range precision. Additionally, it contains six calibrated cameras time-synchronized at 10 Hz, that together produce a 360 degree coverage around the vehicle. The six cameras are 2.4MP (1936 x 1216), global-shutter, and oriented at 60 degree intervals. They are synchronized with 10 Hz scans from our Luminar-H2 sensors oriented at 90 degree intervals (datum names: `CAMERA_01`, `CAMERA_05`, `CAMERA_06`, `CAMERA_07`, `CAMERA_08` and `CAMERA_09`) - the camera intrinsics can be accessed with `datum['intrinsics']`. The data from the Luminar sensors is aggregated into a 360 point cloud covering the scene (datum name: `lidar`). Each sensor has associated extrinsics mapping it to a common vehicle frame of reference (`datum['extrinsics']`).
 
 The training and validation scenes are 5 or 10 seconds long and consist of 50 or 100 samples with corresponding Luminar-H2 pointcloud and six image frames including intrinsic and extrinsic calibration. The training set contains 150 scenes with a total of 12650 individual samples (75900 RGB images), and the validation set contains 50 scenes with a total of 3950 samples (23700 RGB images).
 
@@ -83,7 +83,7 @@ Total: `150 scenes` and `12650 frames`.
 Total: `50 scenes` and `3950 frames`.
 
 
-### Validation split
+### Test split
 
 | Location      | Num Scenes (11 frames)      | Total frames |
 | ------------- |:-------------:|:-------------:|

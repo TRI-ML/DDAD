@@ -1,6 +1,4 @@
-# Copyright 2020 Toyota Research Institute.  All rights reserved.
-
-https://github.com/TRI-ML/DDAD
+# Copyright 2020 Toyota Research Institute.  All rights reserved. https://github.com/TRI-ML/DDAD
 
 This work is licensed under a
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
