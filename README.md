@@ -5,8 +5,11 @@
 </a>
 
 - [How to Use](#how-to-use)
+- [Evaluation metrics](#evaluation-metrics)
+- [IPython notebook](#ipython-notebook)
 - [Dataset details](#dataset-details)
 - [Dataset stats](#dataset-stats)
+- [Sensor placement](#sensor-placement)
 - [References](#references)
 - [Privacy](#privacy)
 - [License](#license)
@@ -17,7 +20,7 @@ DDAD is a new autonomous driving benchmark from TRI (Toyota Research Institute) 
 
 ## How to Use
 
-The data can be downloaded here: [train+val](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD.tar) (257 GB, md5 checksum: `027686329dda41bd540e71ac5b43ebcb`) and [test](coming_soon). To load the dataset, please use the [TRI Dataset Governance Policy (DGP) codebase](https://github.com/TRI-ML/dgp). The following snippet will instantiate the dataset:
+The data can be downloaded here: [train+val](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD.tar) (257 GB, md5 checksum: `027686329dda41bd540e71ac5b43ebcb`) and [test](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD_test.tar) (37GB GB, md5 checksum: `cb244da1865c28898df3de7e904a1200`). To load the dataset, please use the [TRI Dataset Governance Policy (DGP) codebase](https://github.com/TRI-ML/dgp). The following snippet will instantiate the dataset:
 
 ```python
 from dgp.datasets import SynchronizedSceneDataset
@@ -39,16 +42,25 @@ for sample in dataset:
   depth_01 = camera_01['depth'] # (H,W) numpy.ndarray, generated from 'lidar'
 ```
 
+The [DGP](https://github.com/TRI-ML/dgp) codebase provides a number of functions that allow loading one or multiple camera images, projecting the lidar point cloud into the camera images, intrinsics and extrinsics support, etc. Additionally, please refer to the [Packnet-SfM](https://github.com/TRI-ML/packnet-sfm) codebase (in PyTorch) for more details on how to integrate and use DDAD for depth estimation training/inference/evaluation and state-of-the-art pretrained models. 
 
-The [DGP](https://github.com/TRI-ML/dgp) codebase provides a number of functions that allow loading one or multiple camera images, projecting the lidar point cloud into the camera images, intrinsics and extrinsics support, etc. Additionally, please refer to the [Packnet-SfM](https://github.com/TRI-ML/packnet-sfm) codebase (in PyTorch) for more details on how to integrate and use DDAD for depth estimation training/inference/evaluation and state-of-the-art pretrained models.
+## Evaluation metrics
+
+Please refer to the the [Packnet-SfM](https://github.com/TRI-ML/packnet-sfm) codebase for instructions on how to compute detailed depth evaluation metrics.
+
+## IPython notebook
+
+The associated [IPython notebook](notebooks/DDAD.ipynb) provides a detailed description of how to instantiate the dataset with various options, including loading frames with context, visualizing rgb and depth images for various cameras, display the lidar point cloud. 
+
+[![](media/figs/notebook.png)](notebooks/DDAD.ipynb)
 
 ## Dataset details
 
-DDAD includes high-resolution, long-range [Luminar-H2](https://www.luminartech.com/technology) as the LiDAR sensors used to generate pointclouds, with a maximum range of 250m and sub-1cm range precision. Additionally, it contains six calibrated cameras time-synchronized at 10 Hz, that together produce a 360 degree coverage around the vehicle. The six cameras are 2.4MP (1936 x 1216), global-shutter, and oriented at 60 degree intervals. They are synchronized with 10 Hz scans from our Luminar-H2 sensors oriented at 90 degree intervals (datum names: `CAMERA_01`, `CAMERA_05`, `CAMERA_06`, `CAMERA_07`, `CAMERA_08` and `CAMERA_09`) - the camera intrinsics can be accessed with `datum['intrinsics']`. The data from the Luminar sensors is aggregated into a 360 point cloud covering the scene (datum name: `lidar`). Each sensor has associated extrinsics mapping it to a common vehicle frame of reference (`datum['extrinsics']`).
+DDAD includes high-resolution, long-range [Luminar-H2](https://www.luminartech.com/technology) as the LiDAR sensors used to generate pointclouds, with a maximum range of 250m and sub-1cm range precision. Additionally, it contains six calibrated cameras time-synchronized at 10 Hz, that together produce a 360 degree coverage around the vehicle. The six cameras are 2.4MP (1936 x 1216), global-shutter, and oriented at 60 degree intervals. They are synchronized with 10 Hz scans from our Luminar-H2 sensors oriented at 90 degree intervals (datum names: `camera_01`, `camera_05`, `camera_06`, `camera_07`, `camera_08` and `camera_09`) - the camera intrinsics can be accessed with `datum['intrinsics']`. The data from the Luminar sensors is aggregated into a 360 point cloud covering the scene (datum name: `lidar`). Each sensor has associated extrinsics mapping it to a common vehicle frame of reference (`datum['extrinsics']`).
 
 The training and validation scenes are 5 or 10 seconds long and consist of 50 or 100 samples with corresponding Luminar-H2 pointcloud and six image frames including intrinsic and extrinsic calibration. The training set contains 150 scenes with a total of 12650 individual samples (75900 RGB images), and the validation set contains 50 scenes with a total of 3950 samples (23700 RGB images).
 
-The test set contains 235 scenes, each 1.1 seconds long and consisting of 11 frames, for a total of 2585 frames (15510 RGB images). The middle frame of each scene has associated panoptic segmentation labels (i.e. semantic and instance segmentation) that **will not be made public**, but will be used to compute finer gained depth metrics (per semantic class and per instance) on an evaluation server (coming soon).
+The test set contains 235 scenes, each 1.1 seconds long and consisting of 11 frames, for a total of 2585 frames (15510 RGB images). The middle frame of each validation and each test scene has associated panoptic segmentation labels (i.e. semantic and instance segmentation). These annotations will be used to compute finer gained depth metrics (per semantic class and per instance). Please note that the test annotations **will not be made public**, but will be used to populate the leaderboard on an external evaluation server (coming soon).
 
 <p float="left">
   <img src="/media/figs/pano1.png" width="32%" />
@@ -96,6 +108,11 @@ Total: `235 scenes` and `2585 frames`.
 
 USA locations: ANN - Ann Arbor, MI; SF - San Francisco Bay Area, CA; DET - Detroit, MI; CAM - Cambridge, Massachusetts. Japan locations: Tokyo and Odaiba.
 
+## Sensor placement
+
+The figure below shows the placement of the DDAD LiDARs and cameras. Please note that both LiDAR and camera sensors are positioned so as to provide 360 degree coverage around the vehicle. The data from all sensors is time synchronized and reported at a frequency of 10 Hz. The data from the Luminar sensors is reported as a single point cloud in the vehicle frame of reference with origin on the ground below the center of the vehicle rear axle, as shown below. For instructions on visualizing the camera images and the point clouds please refer to this [IPython notebook](media/notebooks/DDAD.ipynb).
+
+![](media/figs/ddad_sensors.png)
 
 ## References
 
@@ -112,6 +129,7 @@ Please use the following citation when referencing DDAD:
   year = {2020},
 }
 ```
+
 
 ## Privacy
 
