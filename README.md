@@ -20,7 +20,7 @@ DDAD is a new autonomous driving benchmark from TRI (Toyota Research Institute) 
 
 ## How to Use
 
-The data can be downloaded here: [train+val](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD.tar) (257 GB, md5 checksum: `027686329dda41bd540e71ac5b43ebcb`) and [test](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD_test.tar) (37GB GB, md5 checksum: `cb244da1865c28898df3de7e904a1200`). To load the dataset, please use the [TRI Dataset Governance Policy (DGP) codebase](https://github.com/TRI-ML/dgp). The following snippet will instantiate the dataset:
+The data can be downloaded here: [train+val](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD.tar) (257 GB, md5 checksum: `c0da97967f76da80f86d6f97d0d98904`) and [test](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD_test.tar) (37GB GB, md5 checksum: `cb244da1865c28898df3de7e904a1200`). To load the dataset, please use the [TRI Dataset Governance Policy (DGP) codebase](https://github.com/TRI-ML/dgp). The following snippet will instantiate the dataset:
 
 ```python
 from dgp.datasets import SynchronizedSceneDataset
