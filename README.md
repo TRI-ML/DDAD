@@ -4,6 +4,7 @@
  <img align="right" src="/media/figs/tri-logo.png" width="20%"/>
 </a>
 
+- [DDAD depth challenge](#ddad-depth-challenge)
 - [How to Use](#how-to-use)
 - [Dataset details](#dataset-details)
 - [Dataset stats](#dataset-stats)
@@ -18,9 +19,14 @@ DDAD is a new autonomous driving benchmark from TRI (Toyota Research Institute) 
 
 ![](media/figs/ddad_viz.gif)
 
+## DDAD depth challenge
+
+In preparation for the [DDAD depth challenge](https://eval.ai/web/challenges/challenge-page/902/overview) we are reworking the DDAD test set. The official testing phase starts May 5th 2021 - an updated DDAD test set will be made public on that date.
+
+
 ## How to Use
 
-The data can be downloaded here: [train+val](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD.tar) (257 GB, md5 checksum: `c0da97967f76da80f86d6f97d0d98904`) and [test](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD_test.tar) (37GB GB, md5 checksum: `cb244da1865c28898df3de7e904a1200`). To load the dataset, please use the [TRI Dataset Governance Policy (DGP) codebase](https://github.com/TRI-ML/dgp). The following snippet will instantiate the dataset:
+The data can be downloaded here: [train+val](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD.tar) (257 GB, md5 checksum: `c0da97967f76da80f86d6f97d0d98904`) and test (coming soon). To load the dataset, please use the [TRI Dataset Governance Policy (DGP) codebase](https://github.com/TRI-ML/dgp). The following snippet will instantiate the dataset:
 
 ```python
 from dgp.datasets import SynchronizedSceneDataset
@@ -50,7 +56,6 @@ DDAD includes high-resolution, long-range [Luminar-H2](https://www.luminartech.c
 
 The training and validation scenes are 5 or 10 seconds long and consist of 50 or 100 samples with corresponding Luminar-H2 pointcloud and six image frames including intrinsic and extrinsic calibration. The training set contains 150 scenes with a total of 12650 individual samples (75900 RGB images), and the validation set contains 50 scenes with a total of 3950 samples (23700 RGB images).
 
-The test set contains 235 scenes, each 1.1 seconds long and consisting of 11 frames, for a total of 2585 frames (15510 RGB images). The middle frame of each validation and each test scene has associated panoptic segmentation labels (i.e. semantic and instance segmentation). These annotations will be used to compute finer gained depth metrics (per semantic class and per instance). Please note that the test annotations **will not be made public**, but will be used to populate the leaderboard on an external evaluation server (coming soon).
 
 <p float="left">
   <img src="/media/figs/pano1.png" width="32%" />
@@ -87,14 +92,7 @@ Total: `50 scenes` and `3950 frames`.
 
 ### Test split
 
-| Location      | Num Scenes (11 frames)      | Total frames |
-| ------------- |:-------------:|:-------------:|
-| SF            | 69  | 759  |
-| ANN           | 49  | 539  |
-| CAM           | 61  | 671  |
-| Japan         | 56  | 616  |
-
-Total: `235 scenes` and `2585 frames`.
+TBD.
 
 USA locations: ANN - Ann Arbor, MI; SF - San Francisco Bay Area, CA; DET - Detroit, MI; CAM - Cambridge, Massachusetts. Japan locations: Tokyo and Odaiba.
 
