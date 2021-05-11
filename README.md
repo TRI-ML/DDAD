@@ -21,8 +21,7 @@ DDAD is a new autonomous driving benchmark from TRI (Toyota Research Institute) 
 
 ## DDAD depth challenge
 
-In preparation for the [DDAD depth challenge](https://eval.ai/web/challenges/challenge-page/902/overview) we are reworking the DDAD test set. The official testing phase starts May 5th 2021 - an updated DDAD test set will be made public on that date.
-
+The [DDAD depth challenge](https://eval.ai/web/challenges/challenge-page/902/overview) consists of two tracks: self-supervised and semi-supervised monocular depth estimation. We will evaluate all methods against the ground truth Lidar depth, and we will also compute and report depth metric per semantic class. The winner will be chosen based on the abs_rel metric. The winners of the challenge will receive cash prizes and will present their work at the CVPR 2021 Workshop [“Frontiers of Monocular 3D Perception”](https://sites.google.com/view/mono3d-workshop). Please check below for details on the [DDAD dataset](#dataset-details), [notebook](ipython-notebook) for loading the data and a description of the [evaluation metrics](#evaluation-metrics).
 
 ## How to Use
 
@@ -89,12 +88,11 @@ Total: `150 scenes` and `12650 frames`.
 
 Total: `50 scenes` and `3950 frames`.
 
+USA locations: ANN - Ann Arbor, MI; SF - San Francisco Bay Area, CA; DET - Detroit, MI; CAM - Cambridge, Massachusetts. Japan locations: Tokyo and Odaiba.
 
 ### Test split
 
-TBD.
-
-USA locations: ANN - Ann Arbor, MI; SF - San Francisco Bay Area, CA; DET - Detroit, MI; CAM - Cambridge, Massachusetts. Japan locations: Tokyo and Odaiba.
+The test split consists of 3080 images with associated intrinsic calibration. The data can be downloaded from [here](https://tri-ml-public.s3.amazonaws.com/github/DDAD/datasets/DDAD_test.tar). 200 images from the test split have associated panoptic labels, similar to the DDAD validation split. The ground truth depth and panoptic labels will not be made public. To evaluate your method on the DDAD test split, please submit your results to the [DDAD depth challenge](https://eval.ai/web/challenges/challenge-page/902/overview), as a single zip file with the same file name convention as the test split (i.e. 000000.png ... 003079.png). Each entry in the zip file should correspond to the DDAD test split image with the same name, and it should be a 16bit single channel PNG image. Each prediction can be either at full image resolution or downsampled. If the resolution of the predicted depth is different from that of the input image, the evaluation script will upsample the predicted depth to the input image resolution using nearest neighbor interpolation.
 
 ## Sensor placement
 
