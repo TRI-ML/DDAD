@@ -104,6 +104,13 @@ The figure below shows the placement of the DDAD LiDARs and cameras. Please note
 
 Please refer to the the [Packnet-SfM](https://github.com/TRI-ML/packnet-sfm) codebase for instructions on how to compute detailed depth evaluation metrics.
 
+We also provide an evaluation script compatible with our [Eval.AI challenge](https://eval.ai/web/challenges/challenge-page/902/overview), that can be used to test your submission on the front camera images of the DDAD validation split. Ground-truth depth maps for evaluation (obtained by iterating over the validation dataset in order) can be found [here](https://tri-ml-public.s3.amazonaws.com/github/DDAD/challenge/gt_val.zip), and an example submission file can be found [here](https://tri-ml-public.s3.amazonaws.com/github/DDAD/challenge/pred_val_sup.zip). To evaluate, you can run:
+
+```
+cd evaluation
+python3 main.py gt_val.zip pred_val_sup.zip semi
+```
+
 ## IPython notebook
 
 The associated [IPython notebook](notebooks/DDAD.ipynb) provides a detailed description of how to instantiate the dataset with various options, including loading frames with context, visualizing rgb and depth images for various cameras, and displaying the lidar point cloud.
